@@ -1,3 +1,6 @@
+const form = document.getElementById('dino-compare');
+const dinoGrid = document.getElementById('grid');
+const submitBtn = document.getElementById('btn');
 
     // Create Dino Constructor
 
@@ -30,3 +33,9 @@
 
 
 // On button click, prepare and display infographic
+
+
+submitBtn.addEventListener('click', () => {
+    form.style.display = 'none';
+    grid.style.display = 'flex';
+});
