@@ -4,6 +4,18 @@ const submitBtn = document.getElementById('btn');
 
     // Create Dino Constructor
 
+    function Dino(species, weight, height, diet, where, when, fact) {
+        this.name = species;
+        this.weight = weight;
+        this.height = height;
+        this.diet = diet;
+        this.location = where;
+        this.timePeriod = when;
+        this.fact = fact;
+    }
+
+
+
 
     // Create Dino Objects
 
@@ -26,6 +38,20 @@ const submitBtn = document.getElementById('btn');
 
 
     // Generate Tiles for each Dino in Array
+
+    // Call to fetch dinosaur data from dino.json and create array of Dino objects
+    let dinosaurs = [];
+    fetch('dino.json')
+        .then(res => res.json())
+        .then(json => dinosaurs = json.Dinos.map(dinosaur => new Dino(
+            dinosaur.species, 
+            dinosaur.weight, 
+            dinosaur.height, 
+            dinosaur.diet, 
+            dinosaur.where, 
+            dinosaur.when, 
+            dinosaur.fact)
+        ));
   
         // Add tiles to DOM
 
@@ -33,6 +59,7 @@ const submitBtn = document.getElementById('btn');
 
 
 // On button click, prepare and display infographic
+
 
 
 submitBtn.addEventListener('click', () => {
