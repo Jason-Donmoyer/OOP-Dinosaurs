@@ -3,7 +3,7 @@ const dinoGrid = document.getElementById('grid');
 const submitBtn = document.getElementById('btn');
 
 
-    // Animal Factory Function
+    // Animal Constructor
     function Animal(species, weight, height, fact) {
         this.name = species;
         this.weight = weight;
@@ -50,14 +50,30 @@ const submitBtn = document.getElementById('btn');
     // Create Human Object
 
     function Human(name, weight, feet, inches, diet) {
-        Animal.call(this, 'human', weight);
-        this.height = (feet * 12) + inches;
+        Animal.call(this, name, weight);
+        this.height = (parseInt(feet) * 12) + parseInt(inches);
         this.diet = diet;
     }
 
 
 
     // Use IIFE to get human data from form
+    
+
+    function getHumanData() {
+        return (function() {
+        const humanName = document.getElementById('name').value;
+        const humanHeightInFeet = document.getElementById('feet').value;
+        const humanHeightInInches = document.getElementById('inches').value;
+        const humanWeight = document.getElementById('weight').value;
+        const humanDiet = document.getElementById('diet').value;
+        return new Human(humanName, 
+                        humanWeight, 
+                        humanHeightInFeet, 
+                        humanHeightInInches, 
+                        humanDiet);
+        })();
+    }   
 
 
     // Create Dino Compare Method 1
@@ -87,5 +103,7 @@ const submitBtn = document.getElementById('btn');
 
 submitBtn.addEventListener('click', () => {
     form.style.display = 'none';
+    const human = getHumanData();
+    console.log([human.name, human.weight, human.height, human.diet]);
     grid.style.display = 'flex';
 });
