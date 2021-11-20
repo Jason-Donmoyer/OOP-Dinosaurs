@@ -261,6 +261,12 @@ refreshBtn.addEventListener('click', () => {
     // Show form on window
     form.style.display = 'block';
 
+    // Reset form inputs
+    document.getElementById('name').value = '';
+    document.getElementById('feet').value = '';
+    document.getElementById('inches').value = '';
+    document.getElementById('weight').value = '';
+
     // Reset human to empty object
     human = {};
 
