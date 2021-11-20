@@ -1,9 +1,19 @@
+
+// Global Variables and Contstants
+
+// variable to store human data after IIFE call
+let human = {};
+
+// HTML button
 const form = document.getElementById('dino-compare');
+
+// Document layout variables
 const dinoGrid = document.getElementById('grid');
 const submitBtn = document.getElementById('btn');
 
 
     // Animal Constructor
+
     function Animal(species, weight, height) {
         this.name = species;
         this.weight = weight;
@@ -22,8 +32,10 @@ const submitBtn = document.getElementById('btn');
         this.diet = diet;
         this.location = where;
         this.timePeriod = when;
-        this.fact = fact;
+        this.facts = [fact];
         this.compareWeight = compareWeight;
+        this.compareHeight = compareHeight;
+        this.compareDiet = compareDiet;
         // this.image = `images/${species.toLowerCase()}.png`;
     }
 
@@ -57,16 +69,10 @@ const submitBtn = document.getElementById('btn');
         this.image = 'images/human.png';
     }
 
-    // Human.prototype = Object.create(Animal.prototype);
-    // Human.prototype.constructor = Human;
-
-
 
     // Use IIFE to get human data from form
     
-    let human = {};
-            
-
+    
     function getHumanData() {
         return (function() { 
             const humanName = document.getElementById('name').value;
@@ -74,7 +80,7 @@ const submitBtn = document.getElementById('btn');
             const humanHeightInInches = document.getElementById('inches').value;
             const humanWeight = parseInt(document.getElementById('weight').value);
             const diet = document.getElementById('diet')
-            const humanDiet = diet.options[diet.selectedIndex].text;
+            const humanDiet = diet.options[diet.selectedIndex].text.toLowerCase();
             human = new Human(humanName, 
                         humanWeight, 
                         humanHeightInFeet, 
@@ -84,28 +90,88 @@ const submitBtn = document.getElementById('btn');
         })();
     }   
 
+     
 
-    // Create Dino Compare Method 1
-    // NOTE: Weight in JSON file is in lbs, height in inches. 
-    compareWeight = function(weight) {
+    // Compare Weight Function
+    function compareWeight(weight) {
         let fact = '';
         if (this.weight > weight) {
             fact = `I am heavier than you by ${this.weight - weight} punds!`;
         } else if (this.weight < weight) {
             fact = `You are heavier than me by ${weight - this.weight} pounds!`;
-        } else {
+        } else if (this.weight === weight) {
             fact = 'It looks like we are the same weight!';
         }
-        return fact;
+        this.facts.push(fact);
     }
 
     
-    // Create Dino Compare Method 2
-    // NOTE: Weight in JSON file is in lbs, height in inches.
-
+    // Compare Height Function
+    function compareHeight(height) {
+        let fact = '';
+        if (this.height > height) {
+            fact = `I am taller than you by ${this.height - height} inches!`;
+        } else if (this.height < height) {
+            fact = `You are taller than me by ${height - this.height} inches!`;
+        } else if (this.height === height) {
+            fact = 'It looks like we are the same height!';
+        }
+        this.facts.push(fact);
+    }
     
-    // Create Dino Compare Method 3
-    // NOTE: Weight in JSON file is in lbs, height in inches.
+    // Compare Diet Function
+    function compareDiet(diet) {
+        let fact = '';
+        if (this.diet === 'herbavor') {
+            switch (diet) {
+                case 'herbavor':
+                    fact = 'It looks like we are both vegetarian!';
+                    break;
+                case 'omnivor':
+                    fact = 'It looks like you eat some meat while I only eat plants.'
+                    break;
+                case 'carnivor':
+                    fact = 'You eat meat!!!? YUCK!';
+                    break;
+                default:
+                    fact = `I'm not sure what you eat`;
+                    break;
+            }
+        } else if (this.diet === 'omnivor') {
+            switch (diet) {
+                case 'herbavor':
+                    fact = 'It looks like you only eat vegetables.';
+                    break;
+                case 'omnivor':
+                    fact = 'It looks like ywe both eat plants and animals!'
+                    break;
+                case 'carnivor':
+                    fact = 'You only eat meat? I eat plants too!';
+                    break;
+                default:
+                    fact = `I'm not sure what you eat`;
+                    break;
+            }
+        } else if (this.diet = 'carnivor') {
+            switch (diet) {
+                case 'herbavor':
+                    fact = `You don't eat meat? I couldn't live without it!`;
+                    break;
+                case 'omnivor':
+                    fact = `It looks like you eat some meat, I don't eat plants!`
+                    break;
+                case 'carnivor':
+                    fact = 'MEAT EATERS REPRESENT!';
+                    break;
+                default:
+                    fact = `I'm not sure what you eat`;
+                    break;
+            }
+        }
+            
+        
+        this.facts.push(fact);
+    }
 
 
     // Generate Tiles for each Dino in Array
